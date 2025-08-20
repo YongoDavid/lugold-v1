@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom CSS variables for your color system */
+:root {
+  --gold-primary: #BF9C4C;
+  --gold-hover: #A6873D;
+  --white: #FFFFFF;
+  --gray-900: #2D3748;
+  --gray-800: #495057;
+  --gray-600: #6C757D;
+  --gray-300: #CED4DA;
+  --gray-200: #DEE2E6;
+  --gray-100: #E9ECEF;
+  --gray-50: #F8F9FA;
+  --green-success: #10B981;
+  --blue-primary: #3B82F6;
+  --gold-light: rgba(191, 156, 76, 0.1);
+}
+
+/* Additional utility classes for line clamping */
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
