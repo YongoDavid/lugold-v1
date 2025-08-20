@@ -112,7 +112,7 @@ const heroSlides = [
   }
 ];
 
-const App = () => {
+const EcommerceApp = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [cartItems, setCartItems] = useState([]);
@@ -161,20 +161,22 @@ const App = () => {
   const Header = () => (
     <header className="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-200">
       {/* Top Bar */}
-      <div className="bg-gray-900 text-white py-2">
+      <div className="bg-gray-900 text-white py-2 hidden md:block">
         <div className="container mx-auto px-4 flex justify-between items-center text-sm">
           <div className="flex items-center gap-6">
             <span className="flex items-center gap-2">
               <Phone size={14} />
-              +234 800 123 4567
+              <span className="hidden lg:inline">+234 800 123 4567</span>
+              <span className="lg:hidden">Call Us</span>
             </span>
-            <span className="flex items-center gap-2">
+            <span className="flex items-center gap-2 hidden lg:flex">
               <Mail size={14} />
               hello@lugoldstore.com
             </span>
           </div>
           <div className="flex items-center gap-4">
-            <span>Free delivery in Lagos & Abuja</span>
+            <span className="hidden xl:inline">Free delivery in Lagos & Abuja</span>
+            <span className="xl:hidden">Free delivery</span>
             <div className="flex gap-2">
               <Facebook size={16} className="cursor-pointer hover:text-yellow-400" />
               <Instagram size={16} className="cursor-pointer hover:text-yellow-400" />
@@ -188,23 +190,23 @@ const App = () => {
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center gap-3">
-            <div className="bg-yellow-600 text-white p-2 rounded-lg font-bold text-lg">
+          <div className="flex items-center gap-2 md:gap-3">
+            <div className="bg-yellow-600 text-white p-1.5 md:p-2 rounded-lg font-bold text-sm md:text-lg">
               LG
             </div>
             <div>
-              <h1 className="text-xl font-bold text-gray-900">LU GOLD STORE</h1>
-              <p className="text-xs text-gray-600">Premium Electronics</p>
+              <h1 className="text-lg md:text-xl font-bold text-gray-900">LU GOLD STORE</h1>
+              <p className="text-xs text-gray-600 hidden sm:block">Premium Electronics</p>
             </div>
           </div>
 
-          {/* Search Bar */}
-          <div className="flex-1 max-w-2xl mx-8">
-            <div className="relative">
+          {/* Search Bar - Hidden on mobile, shown on tablet+ */}
+          <div className="hidden md:flex flex-1 max-w-2xl mx-4 lg:mx-8">
+            <div className="relative w-full">
               <input
                 type="text"
                 placeholder="Search for electronics, phones, laptops..."
-                className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+                className="w-full px-4 py-2.5 md:py-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-sm md:text-base"
               />
               <button className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-yellow-600 text-white p-2 rounded-md hover:bg-yellow-700 transition-colors">
                 <Search size={18} />
@@ -213,80 +215,147 @@ const App = () => {
           </div>
 
           {/* Action Buttons */}
-          <div className="flex items-center gap-4">
-            <button className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-lg transition-colors">
+          <div className="flex items-center gap-1 md:gap-4">
+            <button className="hidden md:flex items-center gap-2 p-2 hover:bg-gray-100 rounded-lg transition-colors">
               <User size={20} />
-              <span className="hidden md:block">Account</span>
+              <span className="hidden lg:block">Account</span>
             </button>
             <button 
               onClick={() => {}}
               className="relative flex items-center gap-2 p-2 hover:bg-gray-100 rounded-lg transition-colors"
             >
-              <Heart size={20} />
-              <span className="hidden md:block">Wishlist</span>
+              <Heart size={18} md={20} />
+              <span className="hidden lg:block">Wishlist</span>
               {wishlistItems.length > 0 && (
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-4 w-4 md:h-5 md:w-5 flex items-center justify-center text-xs">
                   {wishlistItems.length}
                 </span>
               )}
             </button>
             <button 
               onClick={() => {}}
-              className="relative flex items-center gap-2 bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700 transition-colors"
+              className="relative flex items-center gap-1 md:gap-2 bg-yellow-600 text-white px-2 md:px-4 py-2 rounded-lg hover:bg-yellow-700 transition-colors text-sm md:text-base"
             >
-              <ShoppingCart size={20} />
-              <span>Cart</span>
+              <ShoppingCart size={18} />
+              <span className="hidden sm:block">Cart</span>
               {cartItems.length > 0 && (
-                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-4 w-4 md:h-5 md:w-5 flex items-center justify-center">
                   {cartItems.reduce((sum, item) => sum + item.quantity, 0)}
                 </span>
               )}
             </button>
             <button 
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 hover:bg-gray-100 rounded-lg"
+              className="md:hidden p-2 hover:bg-gray-100 rounded-lg ml-2"
             >
-              <Menu size={20} />
+              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Search Bar */}
+        <div className="md:hidden mt-4">
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Search electronics..."
+              className="w-full px-4 py-2.5 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+            />
+            <button className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-yellow-600 text-white p-2 rounded-md hover:bg-yellow-700 transition-colors">
+              <Search size={16} />
             </button>
           </div>
         </div>
       </div>
 
-      {/* Navigation */}
-      <nav className="bg-gray-50 border-t border-gray-200">
+      {/* Navigation - Desktop */}
+      <nav className="bg-gray-50 border-t border-gray-200 hidden md:block">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between py-3">
-            <div className="flex items-center gap-8">
+            <div className="flex items-center gap-4 lg:gap-8">
               <button className="flex items-center gap-2 font-medium text-gray-900 hover:text-yellow-600 transition-colors">
                 <Filter size={18} />
-                All Categories
+                <span className="hidden lg:inline">All Categories</span>
+                <span className="lg:hidden">Categories</span>
               </button>
-              {categories.slice(0, 6).map((category) => (
+              {categories.slice(0, 4).map((category) => (
                 <a 
                   key={category.name}
                   href="#" 
-                  className="text-gray-700 hover:text-yellow-600 transition-colors font-medium"
+                  className="text-gray-700 hover:text-yellow-600 transition-colors font-medium text-sm lg:text-base hidden lg:block"
                 >
                   {category.name}
                 </a>
               ))}
+              <div className="lg:hidden">
+                <select className="text-sm border-none bg-transparent text-gray-700 font-medium">
+                  <option>More Categories</option>
+                  {categories.map((category) => (
+                    <option key={category.name}>{category.name}</option>
+                  ))}
+                </select>
+              </div>
             </div>
-            <div className="flex items-center gap-4">
-              <span className="text-sm text-gray-600">24/7 Support</span>
-              <div className="flex items-center gap-2">
-                <Truck size={16} className="text-green-600" />
-                <span className="text-sm text-gray-600">Free Shipping</span>
+            <div className="flex items-center gap-2 lg:gap-4">
+              <span className="text-xs lg:text-sm text-gray-600 hidden lg:inline">24/7 Support</span>
+              <div className="flex items-center gap-1 lg:gap-2">
+                <Truck size={14} lg={16} className="text-green-600" />
+                <span className="text-xs lg:text-sm text-gray-600">Free Shipping</span>
               </div>
             </div>
           </div>
         </div>
       </nav>
+
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="md:hidden bg-white border-t border-gray-200 shadow-lg">
+          <div className="container mx-auto px-4 py-4">
+            <div className="flex flex-col space-y-4">
+              <button className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <span className="flex items-center gap-2">
+                  <Filter size={18} />
+                  All Categories
+                </span>
+                <ChevronRight size={16} />
+              </button>
+              
+              <div className="grid grid-cols-2 gap-2">
+                {categories.slice(0, 6).map((category) => (
+                  <a 
+                    key={category.name}
+                    href="#" 
+                    className="flex items-center gap-2 p-3 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+                  >
+                    <span>{category.icon}</span>
+                    <span className="text-sm">{category.name}</span>
+                  </a>
+                ))}
+              </div>
+
+              <div className="border-t pt-4">
+                <button className="flex items-center gap-2 p-3 w-full text-left hover:bg-gray-50 rounded-lg">
+                  <User size={18} />
+                  My Account
+                </button>
+                <div className="flex items-center justify-between p-3 text-sm text-gray-600">
+                  <span>24/7 Support</span>
+                  <span className="flex items-center gap-1">
+                    <Phone size={14} />
+                    +234 800 123 4567
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 
   // Hero Carousel Component
   const HeroCarousel = () => (
-    <section className="relative h-96 md:h-[500px] overflow-hidden">
+    <section className="relative h-64 md:h-96 lg:h-[500px] overflow-hidden">
       {heroSlides.map((slide, index) => (
         <div
           key={slide.id}
@@ -301,14 +370,14 @@ const App = () => {
           }}
         >
           <div className="container mx-auto px-4 h-full flex items-center">
-            <div className="text-white max-w-2xl">
-              <h2 className="text-4xl md:text-6xl font-bold mb-4 leading-tight">
+            <div className="text-white max-w-xl lg:max-w-2xl">
+              <h2 className="text-2xl md:text-4xl lg:text-6xl font-bold mb-2 md:mb-4 leading-tight">
                 {slide.title}
               </h2>
-              <p className="text-xl md:text-2xl mb-8 opacity-90">
+              <p className="text-base md:text-xl lg:text-2xl mb-4 md:mb-8 opacity-90">
                 {slide.subtitle}
               </p>
-              <button className="bg-yellow-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-yellow-700 transition-colors transform hover:scale-105">
+              <button className="bg-yellow-600 text-white px-4 py-2 md:px-8 md:py-4 rounded-lg text-base md:text-lg font-semibold hover:bg-yellow-700 transition-colors transform hover:scale-105">
                 {slide.cta}
               </button>
             </div>
@@ -319,24 +388,24 @@ const App = () => {
       {/* Navigation Arrows */}
       <button 
         onClick={() => setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length)}
-        className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition-colors"
+        className="absolute left-2 md:left-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-2 md:p-3 rounded-full transition-colors"
       >
-        <ChevronLeft size={24} />
+        <ChevronLeft size={20} />
       </button>
       <button 
         onClick={() => setCurrentSlide((prev) => (prev + 1) % heroSlides.length)}
-        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition-colors"
+        className="absolute right-2 md:right-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white p-2 md:p-3 rounded-full transition-colors"
       >
-        <ChevronRight size={24} />
+        <ChevronRight size={20} />
       </button>
 
       {/* Indicators */}
-      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex gap-3">
+      <div className="absolute bottom-3 md:bottom-6 left-1/2 transform -translate-x-1/2 flex gap-2 md:gap-3">
         {heroSlides.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}
-            className={`w-3 h-3 rounded-full transition-colors ${
+            className={`w-2 h-2 md:w-3 md:h-3 rounded-full transition-colors ${
               index === currentSlide ? 'bg-yellow-500' : 'bg-white/50'
             }`}
           />
@@ -347,36 +416,36 @@ const App = () => {
 
   // Features Section
   const FeaturesSection = () => (
-    <section className="py-16 bg-gray-50">
+    <section className="py-8 md:py-16 bg-gray-50">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
           <div className="text-center">
-            <div className="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Truck className="text-yellow-600" size={24} />
+            <div className="bg-yellow-100 w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4">
+              <Truck className="text-yellow-600" size={20} />
             </div>
-            <h3 className="font-bold text-lg mb-2">Free Delivery</h3>
-            <p className="text-gray-600">Same day delivery in Lagos & Abuja</p>
+            <h3 className="font-bold text-sm md:text-lg mb-1 md:mb-2">Free Delivery</h3>
+            <p className="text-gray-600 text-xs md:text-base">Same day delivery in Lagos & Abuja</p>
           </div>
           <div className="text-center">
-            <div className="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Shield className="text-yellow-600" size={24} />
+            <div className="bg-yellow-100 w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4">
+              <Shield className="text-yellow-600" size={20} />
             </div>
-            <h3 className="font-bold text-lg mb-2">Warranty Protection</h3>
-            <p className="text-gray-600">Full manufacturer warranty on all products</p>
+            <h3 className="font-bold text-sm md:text-lg mb-1 md:mb-2">Warranty Protection</h3>
+            <p className="text-gray-600 text-xs md:text-base">Full manufacturer warranty on all products</p>
           </div>
           <div className="text-center">
-            <div className="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Headphones className="text-yellow-600" size={24} />
+            <div className="bg-yellow-100 w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4">
+              <Headphones className="text-yellow-600" size={20} />
             </div>
-            <h3 className="font-bold text-lg mb-2">24/7 Support</h3>
-            <p className="text-gray-600">Round the clock customer service</p>
+            <h3 className="font-bold text-sm md:text-lg mb-1 md:mb-2">24/7 Support</h3>
+            <p className="text-gray-600 text-xs md:text-base">Round the clock customer service</p>
           </div>
           <div className="text-center">
-            <div className="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Award className="text-yellow-600" size={24} />
+            <div className="bg-yellow-100 w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4">
+              <Award className="text-yellow-600" size={20} />
             </div>
-            <h3 className="font-bold text-lg mb-2">Premium Quality</h3>
-            <p className="text-gray-600">Only authentic, certified products</p>
+            <h3 className="font-bold text-sm md:text-lg mb-1 md:mb-2">Premium Quality</h3>
+            <p className="text-gray-600 text-xs md:text-base">Only authentic, certified products</p>
           </div>
         </div>
       </div>
@@ -485,29 +554,29 @@ const App = () => {
 
   // Products Section
   const ProductsSection = () => (
-    <section className="py-16">
+    <section className="py-8 md:py-16">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 md:mb-8 gap-4">
           <div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">Featured Products</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Featured Products</h2>
             <p className="text-gray-600">Discover our premium collection of electronics</p>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 md:gap-4">
             <div className="flex border border-gray-300 rounded-lg overflow-hidden">
               <button 
                 onClick={() => setViewMode('grid')}
                 className={`p-2 ${viewMode === 'grid' ? 'bg-yellow-600 text-white' : 'bg-white text-gray-600'}`}
               >
-                <Grid size={18} />
+                <Grid size={16} />
               </button>
               <button 
                 onClick={() => setViewMode('list')}
                 className={`p-2 ${viewMode === 'list' ? 'bg-yellow-600 text-white' : 'bg-white text-gray-600'}`}
               >
-                <List size={18} />
+                <List size={16} />
               </button>
             </div>
-            <select className="border border-gray-300 rounded-lg px-3 py-2">
+            <select className="border border-gray-300 rounded-lg px-3 py-2 text-sm w-full sm:w-auto">
               <option>Sort by popularity</option>
               <option>Sort by price: low to high</option>
               <option>Sort by price: high to low</option>
@@ -516,14 +585,18 @@ const App = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className={`grid gap-4 md:gap-6 ${
+          viewMode === 'grid' 
+            ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4' 
+            : 'grid-cols-1'
+        }`}>
           {products.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
 
-        <div className="text-center mt-12">
-          <button className="bg-yellow-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-yellow-700 transition-colors">
+        <div className="text-center mt-8 md:mt-12">
+          <button className="bg-yellow-600 text-white px-6 md:px-8 py-2 md:py-3 rounded-lg font-semibold hover:bg-yellow-700 transition-colors">
             View All Products
           </button>
         </div>
@@ -533,24 +606,24 @@ const App = () => {
 
   // Categories Section
   const CategoriesSection = () => (
-    <section className="py-16 bg-gray-50">
+    <section className="py-8 md:py-16 bg-gray-50">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Shop by Category</h2>
+        <div className="text-center mb-8 md:mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Shop by Category</h2>
           <p className="text-gray-600 text-lg">Find exactly what you're looking for</p>
         </div>
         
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-3 md:gap-4">
           {categories.map((category) => (
             <div 
               key={category.name}
-              className="bg-white p-6 rounded-lg text-center hover:shadow-lg transition-shadow cursor-pointer group"
+              className="bg-white p-3 md:p-6 rounded-lg text-center hover:shadow-lg transition-shadow cursor-pointer group"
             >
-              <div className="text-4xl mb-3 group-hover:scale-110 transition-transform">
+              <div className="text-2xl md:text-4xl mb-2 md:mb-3 group-hover:scale-110 transition-transform">
                 {category.icon}
               </div>
-              <h3 className="font-semibold text-gray-900 mb-1">{category.name}</h3>
-              <p className="text-sm text-gray-500">{category.count} items</p>
+              <h3 className="font-semibold text-gray-900 mb-1 text-xs md:text-base">{category.name}</h3>
+              <p className="text-xs md:text-sm text-gray-500">{category.count} items</p>
             </div>
           ))}
         </div>
@@ -560,21 +633,21 @@ const App = () => {
 
   // Newsletter Section
   const NewsletterSection = () => (
-    <section className="py-16 bg-yellow-600">
+    <section className="py-8 md:py-16 bg-yellow-600">
       <div className="container mx-auto px-4 text-center">
-        <h2 className="text-3xl font-bold text-white mb-4">
+        <h2 className="text-2xl md:text-3xl font-bold text-white mb-2 md:mb-4">
           Stay Updated with Latest Deals
         </h2>
-        <p className="text-yellow-100 text-lg mb-8">
+        <p className="text-yellow-100 text-base md:text-lg mb-6 md:mb-8">
           Subscribe to our newsletter and never miss out on exclusive offers
         </p>
-        <div className="max-w-md mx-auto flex gap-3">
+        <div className="max-w-md mx-auto flex flex-col sm:flex-row gap-3">
           <input
             type="email"
             placeholder="Enter your email address"
-            className="flex-1 px-4 py-3 rounded-lg border-0 focus:ring-2 focus:ring-yellow-300"
+            className="flex-1 px-4 py-3 rounded-lg border-0 focus:ring-2 focus:ring-yellow-300 text-sm md:text-base"
           />
-          <button className="bg-white text-yellow-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+          <button className="bg-white text-yellow-600 px-4 md:px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors text-sm md:text-base whitespace-nowrap">
             Subscribe
           </button>
         </div>
@@ -585,78 +658,78 @@ const App = () => {
   // Footer Component
   const Footer = () => (
     <footer className="bg-gray-900 text-white">
-      <div className="container mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div>
-            <div className="flex items-center gap-3 mb-6">
+      <div className="container mx-auto px-4 py-8 md:py-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+          <div className="sm:col-span-2 lg:col-span-1">
+            <div className="flex items-center gap-3 mb-4 md:mb-6">
               <div className="bg-yellow-600 text-white p-2 rounded-lg font-bold text-lg">
                 LG
               </div>
               <div>
-                <h3 className="text-xl font-bold">LU GOLD STORE</h3>
+                <h3 className="text-lg md:text-xl font-bold">LU GOLD STORE</h3>
                 <p className="text-gray-400 text-sm">Premium Electronics</p>
               </div>
             </div>
-            <p className="text-gray-300 mb-4">
+            <p className="text-gray-300 mb-4 text-sm md:text-base">
               Your trusted partner for premium electrical appliances with quality guarantee and exceptional customer service.
             </p>
             <div className="flex gap-4">
-              <Facebook className="cursor-pointer hover:text-yellow-400 transition-colors" />
-              <Instagram className="cursor-pointer hover:text-yellow-400 transition-colors" />
-              <Twitter className="cursor-pointer hover:text-yellow-400 transition-colors" />
-              <Youtube className="cursor-pointer hover:text-yellow-400 transition-colors" />
+              <Facebook size={20} className="cursor-pointer hover:text-yellow-400 transition-colors" />
+              <Instagram size={20} className="cursor-pointer hover:text-yellow-400 transition-colors" />
+              <Twitter size={20} className="cursor-pointer hover:text-yellow-400 transition-colors" />
+              <Youtube size={20} className="cursor-pointer hover:text-yellow-400 transition-colors" />
             </div>
           </div>
 
           <div>
-            <h4 className="font-bold text-lg mb-6">Quick Links</h4>
-            <ul className="space-y-3">
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">About Us</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Contact</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">FAQ</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Shipping Info</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Returns</a></li>
+            <h4 className="font-bold text-base md:text-lg mb-4 md:mb-6">Quick Links</h4>
+            <ul className="space-y-2 md:space-y-3">
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors text-sm md:text-base">About Us</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors text-sm md:text-base">Contact</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors text-sm md:text-base">FAQ</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors text-sm md:text-base">Shipping Info</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors text-sm md:text-base">Returns</a></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-bold text-lg mb-6">Categories</h4>
-            <ul className="space-y-3">
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Smartphones</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Laptops</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">TV & Audio</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Gaming</a></li>
-              <li><a href="#" className="text-gray-300 hover:text-white transition-colors">Accessories</a></li>
+            <h4 className="font-bold text-base md:text-lg mb-4 md:mb-6">Categories</h4>
+            <ul className="space-y-2 md:space-y-3">
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors text-sm md:text-base">Smartphones</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors text-sm md:text-base">Laptops</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors text-sm md:text-base">TV & Audio</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors text-sm md:text-base">Gaming</a></li>
+              <li><a href="#" className="text-gray-300 hover:text-white transition-colors text-sm md:text-base">Accessories</a></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-bold text-lg mb-6">Contact Info</h4>
-            <div className="space-y-4">
+            <h4 className="font-bold text-base md:text-lg mb-4 md:mb-6">Contact Info</h4>
+            <div className="space-y-3 md:space-y-4">
               <div className="flex items-center gap-3">
-                <MapPin size={18} className="text-yellow-400" />
-                <span className="text-gray-300">Lagos & Abuja, Nigeria</span>
+                <MapPin size={16} className="text-yellow-400 flex-shrink-0" />
+                <span className="text-gray-300 text-sm md:text-base">Lagos & Abuja, Nigeria</span>
               </div>
               <div className="flex items-center gap-3">
-                <Phone size={18} className="text-yellow-400" />
-                <span className="text-gray-300">+234 800 123 4567</span>
+                <Phone size={16} className="text-yellow-400 flex-shrink-0" />
+                <span className="text-gray-300 text-sm md:text-base">+234 800 123 4567</span>
               </div>
               <div className="flex items-center gap-3">
-                <Mail size={18} className="text-yellow-400" />
-                <span className="text-gray-300">hello@lugoldstore.com</span>
+                <Mail size={16} className="text-yellow-400 flex-shrink-0" />
+                <span className="text-gray-300 text-sm md:text-base break-all">hello@lugoldstore.com</span>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="border-t border-gray-800 py-6">
+      <div className="border-t border-gray-800 py-4 md:py-6">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400 text-sm mb-4 md:mb-0">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-gray-400 text-sm text-center md:text-left">
               © 2025 LU GOLD STORE. All rights reserved.
             </p>
-            <div className="flex gap-6 text-sm">
+            <div className="flex flex-wrap justify-center gap-4 md:gap-6 text-sm">
               <a href="#" className="text-gray-400 hover:text-white transition-colors">Privacy Policy</a>
               <a href="#" className="text-gray-400 hover:text-white transition-colors">Terms of Service</a>
               <a href="#" className="text-gray-400 hover:text-white transition-colors">Cookie Policy</a>
@@ -680,4 +753,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default EcommerceApp;
